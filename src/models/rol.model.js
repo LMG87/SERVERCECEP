@@ -24,12 +24,12 @@ const Rol = sequelize.define(
 );
 
 Rol.hasMany(User,{
-    foreignkey: "rol_id",
+    foreignkey: "RolId",
     sourcekey: "id"
 });
 
 User.belongsTo(Rol,{
-    foreignkey: "rol_id",
+    foreignkey: "RolId",
     targetkey: "id"
 });
 

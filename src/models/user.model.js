@@ -35,11 +35,11 @@ const User = sequelize.define(
             allowNull: false,
             unique: true,
             validate:{
-                isMail: true,
+                isEmail: true,
                 notNull: {msg:"El correo electronico es obligatorio"}
             }
         },
-        rol_id: {
+        RolId: {
             type: DataTypes.UUID,
             allowNull: false,
             validate:{
