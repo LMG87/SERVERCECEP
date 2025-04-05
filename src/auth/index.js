@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const error = require("../middlewares/error");
 
 const secret = config.jwt.secret;
 
@@ -28,7 +29,7 @@ function getToken(authorization){
     if(authorization.indexOf("Bearer")===-1){
         throw error("Invalid Format", 401);
     }
-    let token = authorization.replace('Bearer',"");
+    let token = authorization.replace('Bearer ',"");
     
     return token;
 }
@@ -36,6 +37,7 @@ function getToken(authorization){
 function decodeHeader(req){
     const authorization = req.headers.authorization || "";
     const token = getToken(authorization);
+    console.log(token);
     const decode = verifyToken(token);
     req.user = decode;
     return decode;

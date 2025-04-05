@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const Rol = require("../models/rol.model");
 const response = require("../res/response");
 const bcrypt = require("bcrypt");
+const fs = require('fs');
 
 const getAll = async(req, res, next)=>{
     try {    
@@ -110,10 +111,43 @@ const deleted = async (req,res,next)=>{
     }
 };
 
+const uploadAvatar = async (req, res, next)=>{
+    const { file } = req;
+    let filePath = file.path;
+    let imagePath = `http://localhost:3000/images/users/avatar/${file.filename}`;
+    let data = {
+        avatar: imagePath,
+        imagePath: filePath
+    };
+    try {
+        const id = req.params.id;
+        const user = await User.findOne({where: {id}});
+        if (user.imagePath != null) {
+            fs.unlink(user.imagePath, (err)=>{
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+            });
+        }
+
+        const updatedUser = await User.update(data, {where: {id}});
+        message={
+            msg: "Image was modified succefully",
+            user: req.body.id,
+            img: imagePath
+        };
+        response.success(req,res,message,200);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getAll,
     getOne,
     create,
     update,
-    deleted
+    deleted,
+    uploadAvatar
 }

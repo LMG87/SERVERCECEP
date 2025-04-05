@@ -39,6 +39,13 @@ const User = sequelize.define(
                 notNull: {msg:"El correo electronico es obligatorio"}
             }
         },
+        avatar:{
+            type:DataTypes.STRING(200),
+            defaultValue: "http://localhost:3000/images/users/avatar/avatar-user.png"
+        },
+        imagePath:{
+            type: DataTypes.STRING(200)
+        },
         RolId: {
             type: DataTypes.UUID,
             allowNull: false,
