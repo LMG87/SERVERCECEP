@@ -29,7 +29,9 @@ const getAll = async(req, res, next)=>{
 const getOne = async (req,res,next)=>{
     try {
         const id = req.params.id;
-        const user = await User.findOne({where:{id}})
+        const user = await User.findOne({where:{id},
+            include : { model: Rol, as: "Rol"}
+        },)
         let data = "";
         if (rol) {
             data = {
